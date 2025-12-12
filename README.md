@@ -1,1 +1,95 @@
-# cracking-the-coding-interview
+isUnique:Implement an algorithm to determine if a string has all unique characters.What if you cannot use additional data structures?
+
+Explaination: To check if all elements are unique with any data structure
+Bruteforce code:
+import java.util.Scanner;
+import java.util.Arrays;
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String s = sc.nextLine();
+		int found=0;
+		int n = s.length();
+	    char[] c = s.toCharArray();
+	    Arrays.sort(c);
+        for(int i=0;i<n-1;i++){
+            if(c[i]==c[i+1]){
+            found=1;
+            break;
+        }
+    }
+		if(found==0){
+		    System.out.println("Yes");
+		    return ;
+		}
+		System.out.println("No");
+	}
+}
+Time Complexity:
+
+✅ O(n log n)
+
+Space Complexity:
+
+✅ O(n)
+
+
+Better Code:
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Main {
+
+    public static boolean allUnique(String s) {
+        HashSet<Character> set = new HashSet<>();
+
+        for (char c : s.toCharArray()) {
+            if (set.contains(c)) {
+                return false;
+            }
+            set.add(c);
+        }
+        return true; // all unique
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        System.out.println(allUnique(s));
+    }
+}
+Complexity	Value
+Time Complexity	O(n)
+Space Complexity	O(n)
+
+
+Optimal Code:
+import java.util.Scanner;
+public class Main {
+
+    public static boolean allUnique(String s) {
+        int[] freq = new int[128];
+
+        for (char c : s.toCharArray()) {
+            if (freq[c] > 0) return false;
+            freq[c]++;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        System.out.println(allUnique(s));
+    }
+}
+Complexity	Value
+Time Complexity	O(n)
+Space Complexity	O(1)
+
+
+
+How to approach:
+If constraints are very small try to go for freqarray data structure.
+If very large constraints ,try to go with datastructures like hashmap or hashset.
