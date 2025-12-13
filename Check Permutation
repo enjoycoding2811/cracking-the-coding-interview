@@ -1,0 +1,132 @@
+Q)Given two Strings , write a method to decide if one is permutation of the other.
+Approach Explanation:
+
+Key Observation
+
+Two strings are permutations of each other if and only if:
+
+They contain the same characters
+
+With the same frequencies
+
+Order does not matter
+
+✅ Approach 1: Sorting Based Comparison
+Idea
+
+If two strings are permutations, then after sorting, they will become identical.
+
+Sorting rearranges characters into a fixed order, making comparison easy.
+
+Steps
+
+Convert each string to a character array
+
+Sort both arrays
+
+Compare the sorted strings
+
+If equal → permutation exists
+code 1:
+import java.util.Scanner;
+import java.util.Arrays;
+public class Main
+{
+    public static String sort(String s){
+        char[] c = s.toCharArray();
+        Arrays.sort(c);
+        int n = c.length;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<n;i++){
+            sb.append(c[i]);
+        }
+        return sb.toString();
+        
+    }
+	public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s1 = sc.nextLine();
+        String s2 = sc.nextLine();
+        if(sort(s1).equals(sort(s2))){
+            System.out.println("Yes");
+            return ;
+        }
+        System.out.println("No");
+	}
+}
+Time Complexity
+
+Sorting string 1: O(n log n)
+
+Sorting string 2: O(n log n)
+
+Comparison: O(n)
+
+👉 Overall Time Complexity:
+O(n log n)
+
+Space Complexity
+
+Character arrays + StringBuilder
+
+O(n) extra space
+code 2:
+Idea
+
+Permutations must have exactly the same character counts
+
+Since strings contain characters, we can use a frequency array
+
+Increment for first string, decrement for second
+
+If all counts become zero → permutation
+
+Steps
+
+Create a frequency array of size 128 (ASCII characters)
+
+Traverse first string → increment counts
+
+Traverse second string → decrement counts
+
+Check if all values are zero
+import java.util.Scanner;
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String s1 = sc.nextLine();
+		String s2 = sc.nextLine();
+		int[] freq = new int[128];
+
+        for (char c : s1.toCharArray()) {
+            freq[c]++;
+        }
+        for (char c : s2.toCharArray()) {
+            freq[c]--;
+        }
+        for(int i=0;i<128;i++){
+            if(freq[i]>0 || freq[i]<0){
+                System.out.println("No");
+                return ;
+            }
+        }
+		System.out.println("Yes");
+	}
+}
+Time Complexity
+
+Traversing string 1: O(n)
+
+Traversing string 2: O(n)
+
+Checking frequency array: O(1) (fixed size 128)
+
+👉 Overall Time Complexity:
+O(n)
+
+Space Complexity
+
+Frequency array of fixed size (128)
+
+O(1) extra space
