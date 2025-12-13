@@ -1,0 +1,72 @@
+Q) Given a string, check if it is a permutation of a palindrome
+Definitions
+
+Palindrome: A string that reads the same forward and backward
+(e.g., madam, racecar)
+
+Permutation: A rearrangement of characters
+
+👉 The task is not to check if the string itself is a palindrome,
+but whether some rearrangement of it can form a palindrome.
+
+Key Observation
+
+For a string to be a palindrome (or a permutation of one):
+
+If the length is even → all characters must have even frequency
+
+If the length is odd → exactly one character can have odd frequency
+
+More than one odd frequency → not possible
+
+Why?
+
+In a palindrome, characters must pair symmetrically around the center
+
+Only one character can sit in the middle (odd count)
+
+Approach (Frequency Array)
+
+Count frequency of each character
+
+Count how many characters have odd frequency
+
+If odd count ≤ 1 → permutation of palindrome exists
+
+code:
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        int[] freq = new int[128]; // ASCII characters
+
+        for (char c : s.toCharArray()) {
+            freq[c]++;
+        }
+
+        int oddCount = 0;
+
+        for (int i = 0; i < 128; i++) {
+            if (freq[i] % 2 != 0) {
+                oddCount++;
+            }
+        }
+
+        if (oddCount <= 1) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
+    }
+}
+⏱ Time Complexity
+Traversing the string: O(n)
+Checking frequency array (fixed size): O(1)
+👉 Overall Time Complexity: O(n)
+
+💾 Space Complexity
+Frequency array of size 128 (constant)
+👉 Space Complexity: O(1)
